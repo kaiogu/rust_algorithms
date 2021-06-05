@@ -16,6 +16,27 @@ pub fn binary_search<T: PartialOrd>(val: &T, vec: &Vec<T>) -> bool {
     false
 }
 
+pub fn selection_sort<T: PartialOrd>(mut vec: Vec<T>) -> Vec<T> {
+    let mut min;
+    let mut min_idx;
+    let mut idx;
+    for start in 0..vec.len() {
+        min = &vec[start];
+        min_idx = start;
+        idx = start;
+        for val in &vec[start..vec.len()] {
+            if val < min {
+                min = val;
+                min_idx = idx;
+            }
+        idx += 1;
+        }
+        vec.swap(start, min_idx)
+    }
+    vec
+}
+
+
 
 #[cfg(test)]
 mod tests {
@@ -64,6 +85,27 @@ mod tests {
     #[test]
     fn binary_search_char_fail() {
         assert_eq!(binary_search(&'7', &vec!['A', 'E', 'I', 'O', 'U']), false);
+    }
+
+    #[test]
+    fn selection_sort_empty() {
+        let vec: Vec<i32> = vec![];
+        assert_eq!(selection_sort(vec), Vec::new());
+    }
+
+    #[test]
+    fn selection_sort_single_element() {
+        assert_eq!(selection_sort(vec![42]), vec![42]);
+    }
+
+    #[test]
+    fn selection_sort_inverted() {
+        assert_eq!(selection_sort(vec![45, 44, 43, 42, 41, 40]), vec![40, 41, 42, 43, 44, 45]);
+    }
+
+    #[test]
+    fn selection_sort_with_chars() {
+        assert_eq!(selection_sort(vec!['\'', 'ö', 'l', 'P', 'U', 'O', '4', '5', '8', '7', '=', ')', '(', '&', 'g', 'L', 'J']), vec!['&', '\'', '(', ')', '4', '5', '7', '8', '=', 'J', 'L', 'O', 'P', 'U', 'g', 'l', 'ö']);
     }
 
 }
