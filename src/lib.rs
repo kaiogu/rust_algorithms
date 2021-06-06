@@ -1,15 +1,15 @@
-pub fn binary_search<T: PartialOrd>(val: &T, vec: &Vec<T>) -> bool {
+pub fn binary_search<T: PartialOrd>(val: &T, vec: &[T]) -> bool {
     let mut low: usize = 0;
     let mut high: usize = vec.len();
     let mut middle: usize;
     while high - low > 0 {
-        middle = (high - low)/2 + low;
+        middle = (high - low) / 2 + low;
         if vec[middle] < *val {
             low = middle + 1;
         } else if vec[middle] > *val {
             high = middle;
         } else {
-            return true
+            return true;
         }
     }
 
@@ -29,14 +29,12 @@ pub fn selection_sort<T: PartialOrd>(mut vec: Vec<T>) -> Vec<T> {
                 min = val;
                 min_idx = idx;
             }
-        idx += 1;
+            idx += 1;
         }
         vec.swap(start, min_idx)
     }
     vec
 }
-
-
 
 #[cfg(test)]
 mod tests {
@@ -69,12 +67,21 @@ mod tests {
 
     #[test]
     fn binary_search_long() {
-        assert_eq!(binary_search(&-300, &vec![-2000, -300, 0, 12, 26, 27, 28, 29, 42 ,43,44]), true);
+        assert_eq!(
+            binary_search(&-300, &vec![-2000, -300, 0, 12, 26, 27, 28, 29, 42, 43, 44]),
+            true
+        );
     }
 
     #[test]
     fn binary_search_float() {
-        assert_eq!(binary_search(&-300f64, &vec![-2000.0, -300.0, 0.0, 12.0, 26.0, 27.0, 28.0, 29.0, 42.0, 43.0, 44.0]), true);
+        assert_eq!(
+            binary_search(
+                &-300f64,
+                &vec![-2000.0, -300.0, 0.0, 12.0, 26.0, 27.0, 28.0, 29.0, 42.0, 43.0, 44.0]
+            ),
+            true
+        );
     }
 
     #[test]
@@ -100,12 +107,19 @@ mod tests {
 
     #[test]
     fn selection_sort_inverted() {
-        assert_eq!(selection_sort(vec![45, 44, 43, 42, 41, 40]), vec![40, 41, 42, 43, 44, 45]);
+        assert_eq!(
+            selection_sort(vec![45, 44, 43, 42, 41, 40]),
+            vec![40, 41, 42, 43, 44, 45]
+        );
     }
 
     #[test]
     fn selection_sort_with_chars() {
-        assert_eq!(selection_sort(vec!['\'', 'ö', 'l', 'P', 'U', 'O', '4', '5', '8', '7', '=', ')', '(', '&', 'g', 'L', 'J']), vec!['&', '\'', '(', ')', '4', '5', '7', '8', '=', 'J', 'L', 'O', 'P', 'U', 'g', 'l', 'ö']);
+        assert_eq!(
+            selection_sort(vec![
+                '\'', 'ö', 'l', 'P', 'O', '7', '4', '=', '(', '&', 'g', 'L', 'J'
+            ]),
+            vec!['&', '\'', '(', '4', '7', '=', 'J', 'L', 'O', 'P', 'g', 'l', 'ö']
+        );
     }
-
 }
