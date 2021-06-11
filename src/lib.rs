@@ -1,18 +1,17 @@
-pub fn binary_search<T: PartialOrd>(val: &T, vec: &[T]) -> bool {
+use std::cmp::Ordering;
+
+pub fn binary_search<T: Ord>(val: &T, vec: &[T]) -> bool {
     let mut low: usize = 0;
     let mut high: usize = vec.len();
     let mut middle: usize;
     while high - low > 0 {
         middle = (high - low) / 2 + low;
-        if vec[middle] < *val {
-            low = middle + 1;
-        } else if vec[middle] > *val {
-            high = middle;
-        } else {
-            return true;
+        match vec[middle].cmp(val) {
+            Ordering::Less => low = middle + 1,
+            Ordering::Greater => high = middle,
+            Ordering::Equal => return true,
         }
     }
-
     false
 }
 
@@ -69,17 +68,6 @@ mod tests {
     fn binary_search_long() {
         assert_eq!(
             binary_search(&-300, &vec![-2000, -300, 0, 12, 26, 27, 28, 29, 42, 43, 44]),
-            true
-        );
-    }
-
-    #[test]
-    fn binary_search_float() {
-        assert_eq!(
-            binary_search(
-                &-300f64,
-                &vec![-2000.0, -300.0, 0.0, 12.0, 26.0, 27.0, 28.0, 29.0, 42.0, 43.0, 44.0]
-            ),
             true
         );
     }
