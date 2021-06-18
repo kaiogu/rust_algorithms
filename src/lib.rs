@@ -15,7 +15,7 @@ pub fn binary_search<T: Ord>(val: &T, vec: &[T]) -> bool {
     false
 }
 
-pub fn selection_sort<T: PartialOrd>(mut vec: Vec<T>) -> Vec<T> {
+pub fn selection_sort<T: Ord>(mut vec: Vec<T>) -> Vec<T> {
     let mut min: &T;
     let mut min_idx: usize;
     let mut idx: usize;
