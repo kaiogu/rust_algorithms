@@ -49,6 +49,7 @@ pub fn quick_sort<T: Ord + Copy>(vec: Vec<T>) -> Vec<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn selection_sort_empty() {
         let vec: Vec<i32> = vec![];
